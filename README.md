@@ -11,6 +11,7 @@ One of the aims of this final project is to count and sort the dominant SARS-CoV
 
 The project uses data from:
 https://www.ncbi.nlm.nih.gov/bioproject/714043
+It has the SRA Bioproject ID 714043
 
 ### Change Log
 
