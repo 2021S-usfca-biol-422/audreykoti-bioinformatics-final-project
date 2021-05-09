@@ -133,6 +133,22 @@ vcf_with_metadata %>%
 
 **Figure 3**: Figure 3 shows which SNPs are commonly found in each sex.
 
+```{r s-gene-snps-by-age-plot}
+# plot the unique alternative alleles in the S gene by age
+
+
+```
+
+**Figure 4**: Figure 4 counts the number of unique alternative alleles in the S gene to determine the most common one in patients of different ages.
+
+```{r s-gene-snps-by-sex-plot}
+# plot the unique alternative alleles in the S gene by sex
+
+
+```
+
+**Figure 5**: Figure 5 counts the number of unique alternative alleles in the S gene to determine the most common one in each sex.
+
 # Tables
 
 ```{r gene-length-table}
@@ -148,7 +164,7 @@ gene_table %>%
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
 
-```{r S-gene-variants-table}
+```{r s-gene-variants-table}
 # create a table that shows how many times each alternative allele occurs in the spike protein gene
 
 ```
