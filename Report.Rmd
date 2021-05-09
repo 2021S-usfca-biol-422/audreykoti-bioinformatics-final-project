@@ -91,7 +91,8 @@ vcf_with_metadata %>%
   theme_few() # get rid of the grey background
 ```
 
-**Figure 1**: N and S genes have more unique SNPs in the set of samples analyzed.
+**Figure 1**: Figure 1 shows the locations of unique SNPs for each SARS-CoV-2 gene.
+# N and S genes have more unique SNPs in the set of samples analyzed.
 
 ```{r distinct-snps-by-age-plot}
 # facet wrap the distinct SNPs on the SARS-CoV-2 genes by age
@@ -162,13 +163,14 @@ gene_table %>%
                              "Length"))
 ```
 
-**Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
+**Table 1**: Table 1 shows the length of each SARS-CoV-2 gene.
+#Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
 
 ```{r s-gene-variants-table}
 # create a table that shows how many times each alternative allele occurs in the spike protein gene
 
 ```
 
-**Table 2**: >>><<<
+**Table 2**: Table 2 represents the count of each alternative allele in the S gene.
 
 # Sources Cited
