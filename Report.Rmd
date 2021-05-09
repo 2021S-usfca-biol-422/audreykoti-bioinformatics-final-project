@@ -1,6 +1,6 @@
 ---
-title: 'Your Title Here'
-author: "Don Francisco"
+title: 'Variant Analysis of SARS-CoV-2 in Zimbabwe between December 2020 and January 2021'
+author: "Audrey Koti"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: pdf_document
 csl: bioinformatics.csl
@@ -8,7 +8,7 @@ bibliography: references.bib
 params:
   gff_file_path: "data/metadata/sars_refgenome_annotation.gff"
   vcf_dir_path: "data/11_vcf_output_for_R"
-  sra_runtable_path: "data/00_sra_runtable/SraRunTable_PRJNA656695_short_example.txt"
+  sra_runtable_path: "data/00_sra_runtable/SraRunTable.txt"
 ---
 
 ```{r setup, include = FALSE}
@@ -20,21 +20,25 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Background and Overview
 
-This is a report on SARS-CoV-2, including some variant analysis [@koyama2020variant].
+Zimbabwe recorded its first COVID-19 case in March 2020 and by the end of the year, sequencing results showed an increase in the occurrence of variants in the SARS-CoV-2 genome found in samples collected nationwide [@MashemedRxiv]. This influx of variants was likely caused by increased travel between South Africa, where the B.1.351 variant [@MasheLancet] was first reported, and Zimbabwe during the December holiday season. A surveillance of the SARS-CoV-2 genome also identified the C.2 and A.23.1 variants in Zimbabwe between December 2020 and January 2021 [@MasheLancet]. The three SARS-CoV-2 variants are associated with increased transmission. Moreover, the B.1.351 variant is also associated with higher mortality as observed in South Africa. However, the occurrence of the C.2 and A.23.1 variants declined in Zimbabwe at the end of the surveillance in January 2021. This report was an analysis of the occurrence of mainly single nucleotide polymorphisms (SNPs) in the SARS-CoV-2 genes in people of different ages and sex. Most COVID-19 patients from Zimbabwe were male and more than half of the cases reported occurred among people of ages 20 - 40 [@MashemedRxiv]. This may be why Zimbabwe's deaths were only about 2.9% of the deaths in neighboring South Africa [@OxCOVID19], despite Zimbabwe having little enforcement of the guidelines to curb transmission, as people in the age group of 20 - 40 years have a better chance of recovering from COVID-19 than those older. Variant analysis is important in understanding how SARS-CoV-2 mutates and how that affects public health measures. I analyzed the distinct SNPs in SARS-CoV-2 genes grouped by age and for each sex. Next, I looked at the unique alternative alleles at each position of the sequence sorted by age and by sex. Finally, I counted the alternative alleles in the gene for the spike protein to determine the most common allele that may be the most responsible for transmission. >>><<<I found that there was a strong association between the >>><<< alternative allele and this age group and sex, which may have led to the higher number of COVID-19 cases among this group of people in Zimbabwe.>>><<<
 
 # Methods
 
-See the set of tutorials on the [vcfR package website](https://knausb.github.io/vcfR_documentation/index.html).
+This report looked at the dominant variants of the SARS-CoV-2 genes that are of concern in Zimbabwe. I obtained the data from the National Center for Biotechnology Information [@ZimData]. I carried out the analysis of these variants in `RStudio`[@RStudio] using R functions and packages such as `ggplot2`[@ggplot2] to plot figures, and `dplyr`[@dplyr] to group by variables as well as count up observations from the data.
 
-You may also want to use any of a range of different COVID data packages and data sources:
+## Analysis of Distinct SNPs in SARS-CoV-2 Genes
+
+Using a script written by Professor Naupaka Zimmerman, I looked at the number of distinct single nucleotide polymorphisms within each named gene to determine where the majority of the variants were found. The number for each gene was tallied up after grouping by the position of the variations in the sequence. This involved using functions such as `filter()`, `tally()` and `group_by()` from the `dplyr`[@dplyr] package.
+
+## Distinct SNPs in SARS-CoV-2 Genes by Age and Sex
+
+
 
 * https://kjhealy.github.io/covdata/
 * https://github.com/como-ph/oxcovid19
 * https://ropensci.org/blog/2020/10/20/searching-medrxivr-and-biorxiv-preprint-data/
 * https://covidtracking.com/data/api
   * `readr::read_csv("https://api.covidtracking.com/v1/states/daily.csv")`
-
-## Subsections are ok too
 
 # Results and Discussion
 
@@ -89,10 +93,15 @@ vcf_with_metadata %>%
 
 **Figure 1**: N and S genes have more unique SNPs in the set of samples analyzed.
 
+```{r }
+
+
+
+```
 # Tables
 
 ```{r example-table}
-# An example table to show the length of each gene using its start and end
+# A table to show the length of each gene using its start and end
 gene_table %>%
   mutate(length = end - start) %>%
   select(gene_name, start, end, length) %>%
