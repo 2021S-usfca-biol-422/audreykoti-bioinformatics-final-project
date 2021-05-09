@@ -32,7 +32,7 @@ Using a script written by Professor Naupaka Zimmerman, I looked at the number of
 
 ## Distinct SNPs in SARS-CoV-2 Genes by Age and Sex
 
-
+I used the `facet_wrap` function to visualize the occurrence of unique alternative alleles at each position by age and by sex using `gglopt2`[@ggplot2]. I also counted up these alternative alleles to find out which one is the most commonly occurring allele among different ages and sexes and represented the findings in a table. 
 
 * https://kjhealy.github.io/covdata/
 * https://github.com/como-ph/oxcovid19
@@ -75,7 +75,7 @@ vcf_with_metadata <- add_genes_metadata_to_vcfstack(
 
 # Figures
 
-```{r sample-plot}
+```{r distinct-snps-plot}
 # create a plot of unique SNP locations within each gene across all samples
 vcf_with_metadata %>%
   filter(!is.na(gene)) %>% # get rid of SNPs not in gene regions
@@ -93,14 +93,49 @@ vcf_with_metadata %>%
 
 **Figure 1**: N and S genes have more unique SNPs in the set of samples analyzed.
 
-```{r }
-
-
-
+```{r distinct-snps-by-age-plot}
+# facet wrap the distinct SNPs on the SARS-CoV-2 genes by age
+vcf_with_metadata %>%
+  filter(!is.na(gene)) %>%
+  group_by(gene, pos) %>%
+  tally() %>%
+  group_by(gene) %>%
+  tally() %>%
+  ggplot(aes(x = gene,
+             y = n)) +
+  geom_point(size = 3, alpha = 0.3) +
+  facet_wrap(. ~ age) +
+  labs(title = "Occurrence of Distinct SARS-CoV-2 gene SNPs by Age",
+       x = "Gene Name",
+       y = "Count") +
+  theme_few()
 ```
+
+**Figure 2**: Figure 2 shows which SNPs are commonly found in different patient ages.
+
+```{r distinct-snps-by-sex-plot}
+# facet wrap the distinct SNPs on the SARS-CoV-2 genes by sex
+vcf_with_metadata %>%
+  filter(!is.na(gene)) %>%
+  group_by(gene, pos) %>%
+  tally() %>%
+  group_by(gene) %>%
+  tally() %>%
+  ggplot(aes(x = gene,
+             y = n)) +
+  geom_point(size = 3, alpha = 0.3) +
+  facet_wrap(. ~ sex) +
+  labs(title = "Occurrence of Distinct SARS-CoV-2 gene SNPs by Sex",
+       x = "Gene Name",
+       y = "Count") +
+  theme_few()
+```
+
+**Figure 3**: Figure 3 shows which SNPs are commonly found in each sex.
+
 # Tables
 
-```{r example-table}
+```{r gene-length-table}
 # A table to show the length of each gene using its start and end
 gene_table %>%
   mutate(length = end - start) %>%
@@ -112,5 +147,12 @@ gene_table %>%
 ```
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
+
+```{r S-gene-variants-table}
+# create a table that shows how many times each alternative allele occurs in the spike protein gene
+
+```
+
+**Table 2**: >>><<<
 
 # Sources Cited
