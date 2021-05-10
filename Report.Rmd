@@ -133,7 +133,7 @@ vcf_with_metadata %>%
              y = n,
              color = host_sex)) +
   geom_point() +
-  scale_color_manual(values = c("yellow", "blue")) +
+  scale_color_manual(values = c("red", "blue")) +
   labs(title = "Occurrence of Distinct SARS-CoV-2 gene SNPs by Sex",
        x = "Gene Name",
        y = "Count") +
