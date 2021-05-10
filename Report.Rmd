@@ -234,6 +234,6 @@ vcf_with_metadata %>%
 ```
 
 **Table 2**: Table 2 shows the count of alternative alleles found on the S gene.
-# T is the most common allele
+# T is the most common allele, more than 4 times the next common alleles. most common are single nucleotide polymorphisms
 
 # Sources Cited
