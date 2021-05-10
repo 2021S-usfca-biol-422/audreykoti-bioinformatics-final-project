@@ -199,7 +199,7 @@ vcf_with_metadata %>%
   labs(title = "Distribution of the T Allele by Age and Sex",
        x = "Age",
        y = "Count") +
-  theme_few() 
+  theme_few()
 ```
 
 **Figure 6**: Figure 6 is based on Table 2 and shows the sex and age where the most common S gene alternative allele is most common.
