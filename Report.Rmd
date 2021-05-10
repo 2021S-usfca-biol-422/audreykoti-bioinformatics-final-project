@@ -181,7 +181,8 @@ vcf_with_metadata %>%
 **Figure 5**: Figure 5 shows the occurrence of S gene variants between December 2020 and January 2021.
 # spikes around late Dec 2020 to early Jan 2021 (holiday season)
 
-```{r dominant-variant-plot}
+```{r alt-allele-plot}
+# create a plot to show how the most common alternative allele is spread
 vcf_with_metadata %>%
   filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene), alt == "T") %>%
   group_by(gene, pos, alt, Host_Age, host_sex) %>%
@@ -220,7 +221,7 @@ gene_table %>%
 
 ```{r s-gene-variants-table}
 # create a table that shows how many times each alternative allele occurs in
-# the spike protein gene
+# the spike protein gene in all patients
 vcf_with_metadata %>%
   filter(!is.na(gene)) %>%
   group_by(gene, pos, alt) %>%
@@ -235,5 +236,23 @@ vcf_with_metadata %>%
 
 **Table 2**: Table 2 shows the count of alternative alleles found on the S gene.
 # T is the most common allele, more than 4 times the next common alleles. most common are single nucleotide polymorphisms
+
+```{r s-gene-variants-by-age-table}
+# create a table that shows how many times each alternative allele occurs in
+# the spike protein gene in patients under 18
+vcf_with_metadata %>%
+  filter(Host_Age < 18, !is.na(gene)) %>%
+  group_by(gene, pos, alt) %>%
+  tally() %>%
+  group_by(gene, alt) %>%
+  tally() %>%
+  filter(gene == "S") %>%
+  knitr::kable(col.names = c("Gene Name",
+                             "Alternative Allele",
+                             "Count"))
+```
+
+**Table 3**: Table 3 shows the count of alternative alleles in the S gene in patients under 18.
+# the T allele is still most common, two alternative alleles present in rest of population not found here (the TT and TTTA)
 
 # Sources Cited
