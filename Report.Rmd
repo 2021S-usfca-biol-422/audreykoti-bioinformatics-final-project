@@ -183,7 +183,7 @@ vcf_with_metadata %>%
 
 **Figure 5**: Figure 5 shows the occurrence of S gene variants between December 2020 and January 2021.
 
-```{r alt-allele-plot}
+```{r alternative-allele-plot}
 # create a plot to show how the most common alternative allele is spread
 vcf_with_metadata %>%
   filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene), alt == "T") %>%
