@@ -47,6 +47,7 @@ library("vcfR")
 library("ggplot2")
 library("dplyr")
 library("ggthemes")
+library("lubridate")
 
 # this loads all function files in the code/functions directory
 function_paths <- list.files("code/functions", full.names = TRUE)
@@ -167,7 +168,7 @@ vcf_with_metadata %>%
   group_by(gene, Collection_Date) %>%
   tally() %>%
   filter(gene == "S") %>%
-  ggplot(aes(x = Collection_Date,
+  ggplot(aes(x = ymd(Collection_Date),
              y = n)) +
   geom_line(color = "purple") +
   labs(title = "Occurrence of the S Gene Variation by Date",
