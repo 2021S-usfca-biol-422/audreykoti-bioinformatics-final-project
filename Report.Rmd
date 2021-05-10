@@ -38,13 +38,9 @@ Using a script written by Professor Zimmerman, I looked at the number of distinc
 
 I used a table made by Professor Zimmerman to look at the sizes of each gene. Based on the longest gene with the most unique SNPs, I analyzed the most common unique SNP in the different patient sexes and ages to determine how the occurrence of this SNP was distributed. I created a table that counts the number of times the alternative alleles occur in the gene and plotted a bar plot for the distribution of the most commonly occurring allele in male and female patients aged 18 and older using `gglopt2`[@ggplot2]. Lastly, I created a table to show whether this same alternative allele was also the most commonly occurring in patients under the age of 18, who represent the minority of COVID-19 cases in Zimbabwe.
 
-* https://kjhealy.github.io/covdata/
-* https://github.com/como-ph/oxcovid19
-* https://ropensci.org/blog/2020/10/20/searching-medrxivr-and-biorxiv-preprint-data/
-* https://covidtracking.com/data/api
-  * `readr::read_csv("https://api.covidtracking.com/v1/states/daily.csv")`
+# Results
 
-# Results and Discussion
+# Discussion
 
 ```{r load-packages-and-functions}
 library("vcfR")
