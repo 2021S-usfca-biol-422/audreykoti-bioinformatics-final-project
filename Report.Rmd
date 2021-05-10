@@ -93,7 +93,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 1**: Figure 1 represents the demographics of COVID-19 patients
-# mostly men infected (more interactions at work). ages 30 - 50 but most men
+# mostly men infected (more interactions at work). ages 25 - 65 but most men
 
 ```{r distinct-snps-plot}
 # create a plot of unique SNP locations within each gene across all samples
@@ -126,7 +126,7 @@ vcf_with_metadata %>%
              y = n,
              color = host_sex)) +
   geom_point() +
-  scale_color_manual(values = c("red", "blue")) +
+  scale_color_manual(values = c("yellow", "blue")) +
   labs(title = "Occurrence of Distinct SARS-CoV-2 gene SNPs by Sex",
        x = "Gene Name",
        y = "Count") +
@@ -140,7 +140,7 @@ vcf_with_metadata %>%
 ```{r s-gene-snps-plot}
 # plot the occurrence of variation in the S gene by age and sex
 vcf_with_metadata %>%
-  filter(Host_Age > 18, !is.na(gene)) %>%
+  filter(Host_Age >= 18, !is.na(gene)) %>%
   group_by(gene, pos, Host_Age, host_sex) %>%
   tally() %>%
   group_by(gene, Host_Age, host_sex) %>%
@@ -157,7 +157,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 4**: Figure 4 shows the count of the S gene variations in patients older than 18 years.
-# S variations more common in males ages 25 -65, also women ages ~35 (increased interactions at work)
+# S variations more common in males ages 30 -65, also women ages ~35 (increased interactions at work)
 
 ```{r snp-dates-plot}
 # plot the occurrence of the S gene variation by date of sample collection
@@ -170,7 +170,7 @@ vcf_with_metadata %>%
   filter(gene == "S") %>%
   ggplot(aes(x = ymd(Collection_Date),
              y = n)) +
-  geom_line(color = "purple") +
+  geom_line(color = "brown") +
   labs(title = "Occurrence of the S Gene Variation by Date",
        x = "Date",
        y = "Count") +
@@ -181,13 +181,26 @@ vcf_with_metadata %>%
 **Figure 5**: Figure 5 shows the occurrence of S gene variants between December 2020 and January 2021.
 # spikes around late Dec 2020 to early Jan 2021 (holiday season)
 
-```{r s-gene-snps-by-sex-plot}
-# plot the unique alternative alleles in the S gene by sex
-
-
+```{r dominant-variant-plot}
+vcf_with_metadata %>%
+  filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene), alt == "T") %>%
+  group_by(gene, pos, alt, Host_Age, host_sex) %>%
+  tally() %>%
+  group_by(gene, alt, Host_Age, host_sex) %>%
+  tally() %>%
+  filter(gene == "S") %>%
+  ggplot(aes(x = Host_Age,
+             y = n,
+             fill = host_sex)) +
+  geom_col(position = position_dodge()) +
+  labs(title = "Distribution of the T Allele by Age and Sex",
+       x = "Age",
+       y = "Count") +
+  theme_few() 
 ```
 
-**Figure 5**: Figure 5 counts the number of unique alternative alleles in the S gene to determine the most common one in each sex.
+**Figure 5**: Figure 5 is based on Table 2 and shows the ages where the most common S gene alternative allele is most common.
+# most common in males
 
 # Tables
 
@@ -206,10 +219,21 @@ gene_table %>%
 #Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
 
 ```{r s-gene-variants-table}
-# create a table that shows how many times each alternative allele occurs in the spike protein gene
-
+# create a table that shows how many times each alternative allele occurs in
+# the spike protein gene
+vcf_with_metadata %>%
+  filter(!is.na(gene)) %>%
+  group_by(gene, pos, alt) %>%
+  tally() %>%
+  group_by(gene, alt) %>%
+  tally() %>%
+  filter(gene == "S") %>%
+  knitr::kable(col.names = c("Gene Name",
+                             "Alternative Allele",
+                             "Count"))
 ```
 
-**Table 2**: Table 2 represents the count of each alternative allele in the S gene.
+**Table 2**: Table 2 shows the count of alternative alleles found on the S gene.
+# T is the most common allele
 
 # Sources Cited
