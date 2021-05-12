@@ -39,6 +39,8 @@ Using a script written by Professor Zimmerman, I looked at the number of distinc
 I used a table made by Professor Zimmerman to look at the sizes of each gene. Based on the longest gene with the most unique SNPs, I analyzed the most common unique SNP in the different patient sexes and ages to determine how the occurrence of this SNP was distributed. I created a table that counts the number of times the alternative alleles occur in the gene and plotted a bar plot for the distribution of the most commonly occurring allele in male and female patients aged 18 and older using `gglopt2` [@ggplot2]. Lastly, I created a table to show whether this same alternative allele was also the most commonly occurring in patients under the age of 18, who represent the minority of COVID-19 cases in Zimbabwe.
 
 # Results
+
+
  mostly men infected (more interactions at work). ages 25 - 65 but most men
  N and S genes have more unique SNPs in the set of samples analyzed.
  men have more variations in most genes, in particular the N and S genes
@@ -48,7 +50,7 @@ I used a table made by Professor Zimmerman to look at the sizes of each gene. Ba
  Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
  T is the most common allele, more than 4 times the next common alleles. most common are single nucleotide polymorphisms
  most changes were from the C or G allele to the T.
- the T allele is still most common, two alternative alleles present in rest of population not found here (the TT and TTTA) 
+ the T allele is still most common, two alternative alleles present in rest of population not found here (the TT and TTTA). not many variants present in U18s.
  
 # Discussion
 
@@ -102,7 +104,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 1**: Figure 1 represents the demographics of COVID-19 patients in Zimbabwe.
-
+\newpage
 ```{r distinct-snps-plot}
 # create a plot of unique SNP locations within each gene across all samples
 vcf_with_metadata %>%
@@ -120,7 +122,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 2**: Figure 1 shows the locations of unique SNPs for each SARS-CoV-2 gene.
-
+\newpage
 ```{r distinct-snps-by-sex-plot}
 # plot the distinct SNPs on the SARS-CoV-2 genes by sex
 vcf_with_metadata %>%
@@ -141,7 +143,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 3**: Figure 3 shows the distribution of distinct SNPs in each sex.
-
+\newpage
 ```{r s-gene-snps-plot}
 # plot the occurrence of variation in the S gene by reference allele and sex
 vcf_with_metadata %>%
@@ -162,7 +164,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 4**: Figure 4 shows the count of the S gene variations in patients older than 18 years.
-
+\newpage
 ```{r s-variants-plot}
 # plot how the s gene variants appear over time 
 vcf_with_metadata %>%
@@ -179,7 +181,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 5**: Figure 5 shows the normalized occurrence of S gene variants each day between December 2020 and January 2021.
-
+\newpage
 ```{r alternative-allele-plot}
 # create a plot to show how the most common alternative allele is spread
 vcf_with_metadata %>%
@@ -218,7 +220,7 @@ gene_table %>%
 ```
 
 **Table 1**: Table 1 shows the length of each SARS-CoV-2 gene.
-
+\newpage
 ```{r s-gene-variants-table}
 # create a table that shows how many times each alternative allele occurs in
 # the spike protein gene in all patients
@@ -232,7 +234,7 @@ vcf_with_metadata %>%
 ```
 
 **Table 2**: Table 2 shows the count of alternative alleles found on the S gene.
-
+\newpage
 ```{r s-gene-variants-by-age-table}
 # create a table that shows how many times each alternative allele occurs in
 # the spike protein gene in patients under 18
