@@ -24,19 +24,19 @@ Zimbabwe recorded its first COVID-19 case in March 2020 and by the end of the ye
 
 # Methods
 
-This report looked at the dominant variants of the SARS-CoV-2 genes that are of concern in Zimbabwe. I obtained the data from the National Center for Biotechnology Information (ZimData). I carried out the analysis of these variants in `RStudio`[@RStudio] using R functions and packages such as `ggplot2`[@ggplot2] to plot figures, and `dplyr`[@dplyr] to group by variables as well as count up observations from the data.
+This report looked at the dominant variants of the SARS-CoV-2 genes that are of concern in Zimbabwe. I obtained the data from the National Center for Biotechnology Information (ZimData). I carried out the analysis of these variants in `RStudio` [@RStudio] using R functions and packages such as `ggplot2` [@ggplot2] to plot figures, and `dplyr` [@dplyr] to group by variables as well as count up observations from the data.
 
 ## Analysis of COVID-19 cases in Zimbabwe
 
-I used `ggplot2`[@ggplot2] to represent, on a bar plot filled by the host sex, the number of COVID-19 cases in male and female patients 18 years and older. This was done to better understand which age group and sex would have better data for variant analysis.
+I used `ggplot2` [@ggplot2] to represent, on a bar plot filled by the host sex, the number of COVID-19 cases in male and female patients 18 years and older. This was done to better understand which age group and sex would have better data for variant analysis.
 
 ## Analysis of Distinct SNPs in SARS-CoV-2 Genes
 
-Using a script written by Professor Zimmerman, I looked at the number of distinct single nucleotide polymorphisms within each named gene to determine where the majority of the variants were found. The number for each gene was tallied up after grouping by the position of the variations in the sequence. This involved using functions such as `filter()`, `tally()` and `group_by()` from the `dplyr`[@dplyr] package. I then used the a scatter plot to visualize the occurrence of SARS-CoV-2 genes in the two sexes to confirm whether or not the genes with more unique SNPs were the same for each sex. After determining the gene with the most unique SNPs, I counted the variations in that particular gene to understand the spread of these variations in males and females of different ages. I then created a line graph showing when the variations increased in Zimbabwe in the time the surveillance was carried out. I used the `lubridate` package[@lubridate] to load the collection date in the correct format.
+Using a script written by Professor Zimmerman, I looked at the number of distinct single nucleotide polymorphisms within each named gene to determine where the majority of the variants were found. The number for each gene was tallied up after grouping by the position of the variations in the sequence. This involved using functions such as `filter()`, `tally()` and `group_by()` from the `dplyr` [@dplyr] package. I then used the a scatter plot to visualize the occurrence of SARS-CoV-2 genes in the two sexes to confirm whether or not the genes with more unique SNPs were the same for each sex. After determining the gene with the most unique SNPs, I counted the variations in that particular gene to understand the spread of these variations in males and females of different ages. I then created a line graph showing when the variations increased in Zimbabwe in the time the surveillance was carried out. I used the `ymd()` function from the lubridate`package [@lubridate] to load the collection date in the correct format.
 
 ## Analysis of Distinct SNPs in SARS-CoV-2 Genes by Sex and Age
 
-I used a table made by Professor Zimmerman to look at the sizes of each gene. Based on the longest gene with the most unique SNPs, I analyzed the most common unique SNP in the different patient sexes and ages to determine how the occurrence of this SNP was distributed. I created a table that counts the number of times the alternative alleles occur in the gene and plotted a bar plot for the distribution of the most commonly occurring allele in male and female patients aged 18 and older using `gglopt2`[@ggplot2]. Lastly, I created a table to show whether this same alternative allele was also the most commonly occurring in patients under the age of 18, who represent the minority of COVID-19 cases in Zimbabwe.
+I used a table made by Professor Zimmerman to look at the sizes of each gene. Based on the longest gene with the most unique SNPs, I analyzed the most common unique SNP in the different patient sexes and ages to determine how the occurrence of this SNP was distributed. I created a table that counts the number of times the alternative alleles occur in the gene and plotted a bar plot for the distribution of the most commonly occurring allele in male and female patients aged 18 and older using `gglopt2` [@ggplot2]. Lastly, I created a table to show whether this same alternative allele was also the most commonly occurring in patients under the age of 18, who represent the minority of COVID-19 cases in Zimbabwe.
 
 # Results
  mostly men infected (more interactions at work). ages 25 - 65 but most men
@@ -90,7 +90,6 @@ vcf_with_metadata <- add_genes_metadata_to_vcfstack(
 vcf_with_metadata %>%
   group_by(Host_Age, host_sex) %>%
   tally() %>%
-  filter(Host_Age > 18) %>%
   ggplot(aes(x = Host_Age,
              y = n,
              fill = host_sex)) +
@@ -101,7 +100,7 @@ vcf_with_metadata %>%
   theme_few()
 ```
 
-**Figure 1**: Figure 1 represents the demographics of COVID-19 patients
+**Figure 1**: Figure 1 represents the demographics of COVID-19 patients in Zimbabwe.
 
 ```{r distinct-snps-plot}
 # create a plot of unique SNP locations within each gene across all samples
@@ -140,10 +139,10 @@ vcf_with_metadata %>%
   theme_few()
 ```
 
-**Figure 3**: Figure 3 shows the distribution of SNPs in each sex.
+**Figure 3**: Figure 3 shows the distribution of distinct SNPs in each sex.
 
 ```{r s-gene-snps-plot}
-# plot the occurrence of variation in the S gene by age and sex
+# plot the occurrence of variation in the S gene by reference allele and sex
 vcf_with_metadata %>%
   filter(Host_Age >= 18, !is.na(gene)) %>%
   group_by(gene, pos, Host_Age, host_sex) %>%
@@ -155,7 +154,7 @@ vcf_with_metadata %>%
              y = n,
              fill = host_sex)) +
   geom_col(position = position_dodge()) +
-  labs(title = "Occurrence of the S Gene Variation by Age and Sex",
+  labs(title = "S Gene Variation by Host Age and Sex",
        x = "Age",
        y = "Count") +
   theme_few()
@@ -163,46 +162,45 @@ vcf_with_metadata %>%
 
 **Figure 4**: Figure 4 shows the count of the S gene variations in patients older than 18 years.
 
-```{r snp-dates-plot}
-# plot the occurrence of the S gene variation by date of sample collection
+```{r s-variants-plot}
+# plot how the s gene variants appear over time 
 vcf_with_metadata %>%
-  filter(!is.na(gene)) %>%
-  group_by(gene, pos, Collection_Date) %>%
+  filter(!is.na(gene), gene == "S") %>%
+  group_by(Collection_Date, gene) %>%
   tally() %>%
-  group_by(gene, Collection_Date) %>%
-  tally() %>%
-  filter(gene == "S") %>%
   ggplot(aes(x = ymd(Collection_Date),
              y = n)) +
   geom_line(color = "brown") +
-  labs(title = "Occurrence of the S Gene Variation by Date",
+  labs(title = "Normalized occurrence of the S Gene Variants by Date",
        x = "Date",
        y = "Count") +
   theme_few()
 ```
 
-**Figure 5**: Figure 5 shows the occurrence of S gene variants between December 2020 and January 2021.
+**Figure 5**: Figure 5 shows the occurrence of S gene variants each day between December 2020 and January 2021.
 
 ```{r alternative-allele-plot}
 # create a plot to show how the most common alternative allele is spread
 vcf_with_metadata %>%
-  filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene), alt == "T") %>%
-  group_by(gene, pos, alt, Host_Age, host_sex) %>%
+  filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene)) %>%
+  group_by(gene, pos, alt, ref, Host_Age, host_sex) %>%
   tally() %>%
-  group_by(gene, alt, Host_Age, host_sex) %>%
+  group_by(gene, alt, ref, Host_Age, host_sex) %>%
   tally() %>%
-  filter(gene == "S") %>%
-  ggplot(aes(x = Host_Age,
+  filter(gene == "S", alt == "T") %>%
+  ggplot(aes(x = ref,
              y = n,
              fill = host_sex)) +
   geom_col(position = position_dodge()) +
-  labs(title = "Distribution of the T Allele by Age and Sex",
-       x = "Age",
+  labs(title = "Distribution of the T Allele by Reference Allele and Sex",
+       x = "Reference Allele",
        y = "Count") +
-  theme_few()
+  theme_few() +
+  theme(axis.text.x = element_text(angle = 90))
+
 ```
 
-**Figure 6**: Figure 6 is based on Table 2 and shows the sex and age where the most common S gene alternative allele is most common.
+**Figure 6**: Figure 6 shows the change to the "T" allele from each reference allele in the S gene by host age and sex.
 
 # Tables
 
