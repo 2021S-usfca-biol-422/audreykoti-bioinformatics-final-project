@@ -47,6 +47,7 @@ I used a table made by Professor Zimmerman to look at the sizes of each gene. Ba
  most common in males
  Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
  T is the most common allele, more than 4 times the next common alleles. most common are single nucleotide polymorphisms
+ most changes were from the C or G allele to the T.
  the T allele is still most common, two alternative alleles present in rest of population not found here (the TT and TTTA) 
  
 # Discussion
@@ -112,7 +113,7 @@ vcf_with_metadata %>%
   tally() %>% # this collapses that down to the number of unique SNP locations
   ggplot(aes(x = gene,
              y = n)) +
-  geom_col(fill = "lightblue") +
+  geom_col(fill = "hotpink") +
   labs(title = "Count of Distinct SNPs in Named SARS-CoV-2 Genes",
          x = "Gene Name") +
   theme_few() # get rid of the gray background
@@ -171,13 +172,13 @@ vcf_with_metadata %>%
   ggplot(aes(x = ymd(Collection_Date),
              y = n)) +
   geom_line(color = "brown") +
-  labs(title = "Normalized occurrence of the S Gene Variants by Date",
+  labs(title = "Occurrence of the S Gene Variants by Date",
        x = "Date",
        y = "Count") +
   theme_few()
 ```
 
-**Figure 5**: Figure 5 shows the occurrence of S gene variants each day between December 2020 and January 2021.
+**Figure 5**: Figure 5 shows the normalized occurrence of S gene variants each day between December 2020 and January 2021.
 
 ```{r alternative-allele-plot}
 # create a plot to show how the most common alternative allele is spread
@@ -192,7 +193,8 @@ vcf_with_metadata %>%
              y = n,
              fill = host_sex)) +
   geom_col(position = position_dodge()) +
-  labs(title = "Distribution of the T Allele by Reference Allele and Sex",
+  scale_fill_manual(values = c("skyblue", "darkgrey")) +
+  labs(title = "Distribution of the T Allele by Reference Allele",
        x = "Reference Allele",
        y = "Count") +
   theme_few() +
@@ -200,7 +202,7 @@ vcf_with_metadata %>%
 
 ```
 
-**Figure 6**: Figure 6 shows the change to the "T" allele from each reference allele in the S gene by host age and sex.
+**Figure 6**: Figure 6 shows the change from represented reference alleles to the "T" allele in the S gene in male and female patients between 25 years and 65 years of age.
 
 # Tables
 
@@ -221,12 +223,9 @@ gene_table %>%
 # create a table that shows how many times each alternative allele occurs in
 # the spike protein gene in all patients
 vcf_with_metadata %>%
-  filter(!is.na(gene)) %>%
-  group_by(gene, pos, alt) %>%
-  tally() %>%
+  filter(!is.na(gene), gene == "S") %>%
   group_by(gene, alt) %>%
   tally() %>%
-  filter(gene == "S") %>%
   knitr::kable(col.names = c("Gene Name",
                              "Alternative Allele",
                              "Count"))
