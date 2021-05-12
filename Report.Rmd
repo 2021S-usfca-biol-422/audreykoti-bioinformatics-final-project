@@ -238,8 +238,6 @@ vcf_with_metadata %>%
 # the spike protein gene in patients under 18
 vcf_with_metadata %>%
   filter(Host_Age < 18, !is.na(gene)) %>%
-  group_by(gene, pos, alt) %>%
-  tally() %>%
   group_by(gene, alt) %>%
   tally() %>%
   filter(gene == "S") %>%
