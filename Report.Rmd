@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Background and Overview
 
-Zimbabwe recorded its first COVID-19 case in March 2020 and by the end of the year, sequencing results showed an increase in the occurrence of variants in the SARS-CoV-2 genome found in samples collected nationwide (MashemedRxiv). This influx of variants was likely caused by increased travel between South Africa, where the B.1.351 variant (MasheLancet) was first reported, and Zimbabwe during the December holiday season. Although the government issued social-distancing and lockdown measures, these measures were not followed or enforced strictly. This may be why several variants spread among the population as shown by the data from the surveillance carried out between the end of 2020 and January 2021. This surveillance of the SARS-CoV-2 genome also identified the C.2 and A.23.1 variants in addition to the B.1.351 variant. However, the occurrence of the C.2 and A.23.1 variants declined in Zimbabwe at the end of the surveillance in January 2021 (MasheLancet). All three SARS-CoV-2 variants are associated with increased transmission. Moreover, the B.1.351 variant is also associated with higher mortality as observed in South Africa. At the time the study was conducted, the B.1.351 variant was found in 69% of the 107 cases sequenced in December 2020 and in 95% of the 104 cases sequenced in January (ZimFact). This report was an analysis of the occurrence of mainly single nucleotide polymorphisms (SNPs) in the SARS-CoV-2 genes in people of different ages and sex. Most COVID-19 patients from Zimbabwe were male and more than half of the cases reported occurred among people of ages 20 - 40 (MashemedRxiv). This may be why Zimbabwe's deaths were only about 2.9% of the deaths in neighboring South Africa (OxCOVID19), despite Zimbabwe having little enforcement of the guidelines to curb transmission, as people in the age group of 20 - 40 years have a better chance of recovering from COVID-19 than those older. Data shows that most of the deaths occurred in January 2021 after an increase in the presence of the B.1.351 variant (Reuters). Variant analysis is important in understanding how SARS-CoV-2 mutates and how that affects public health measures. I analyzed the distinct SNPs in SARS-CoV-2 genes grouped by age and for each sex. Next, I looked at the unique alternative alleles at each position of the sequence sorted by age and by sex. Finally, I counted the alternative alleles in the gene for the spike protein to determine the most common allele that may be the most responsible for increased transmission. I found that there is a strong association between the "T" alternative allele and males aged 30 - 50, which may have led to the higher number of COVID-19 cases among this group of people in Zimbabwe.
+Zimbabwe recorded its first COVID-19 case in March 2020 and by the end of the year, sequencing results showed an increase in the occurrence of variants in the SARS-CoV-2 genome found in samples collected nationwide (MashemedRxiv). This influx of variants was likely caused by increased travel between South Africa, where the B.1.351 variant (MasheLancet) was first reported, and Zimbabwe during the December holiday season. Although the government issued social-distancing and lockdown measures, these measures were not followed or enforced strictly. This may be why several variants spread among the population as shown by the data from the surveillance carried out between the end of 2020 and January 2021. This surveillance of the SARS-CoV-2 genome also identified the C.2 and A.23.1 variants in addition to the B.1.351 variant. However, the occurrence of the C.2 and A.23.1 variants declined in Zimbabwe towards the end of January 2021 (MasheLancet). All three SARS-CoV-2 variants are associated with increased transmission. Moreover, the B.1.351 variant is also associated with higher mortality as observed in South Africa. At the time the study was conducted, the B.1.351 variant was found in 69% of the 107 cases sequenced in December 2020 and in 95% of the 104 cases sequenced in January (ZimFact). This report was an analysis of the occurrence of mainly single nucleotide polymorphisms (SNPs) in the SARS-CoV-2 genes in people of different ages and sex. Most COVID-19 patients from Zimbabwe were male and more than half of the cases reported occurred among people of ages 20 to 40 (MashemedRxiv). This may be why Zimbabwe's deaths were only about 2.9% of the deaths in neighboring South Africa (OxCOVID19), despite Zimbabwe having little enforcement of the guidelines to curb transmission, as people in the age group of 20 to 40 years have a better chance of recovering from COVID-19 than those older. Data show that most of the deaths occurred in January 2021 after an increase in the presence of the B.1.351 variant (Reuters). Variant analysis is important in understanding how SARS-CoV-2 mutates and how that affects public health measures. I analyzed the distinct SNPs in SARS-CoV-2 genes grouped by age and for each sex. Next, I looked at the unique alternative alleles at each position of the sequence sorted by age and by sex. Finally, I counted the alternative alleles in the gene for the spike protein to determine the most common allele that may be the most responsible for increased transmission. I found that there is a strong association between the "T" alternative allele and males aged 30 to 50, which may have led to the higher number of COVID-19 cases among this group of people in Zimbabwe.
 
 # Methods
 
@@ -40,6 +40,7 @@ I used a table made by Professor Zimmerman to look at the sizes of each gene. Ba
 
 # Results
 
+Although the surveillance from which the data this report analyses suggested that most COVID-19 patients were in the age group of 20 to 40, the demographics plot of this analysis showed that most of the patients were aged 25 to 65. The majority of these patients were male. Variations in the SARS-CoV-2 genome were present mostly in the N and S genes, with the S gene having the most variations. These S gene variations were more common among males aged 30 to 65 years and also females around the age of 35. This analysis also showed that the S variations increased dramatically around late December 2020 to January 2021. 
 
  mostly men infected (more interactions at work). ages 25 - 65 but most men
  N and S genes have more unique SNPs in the set of samples analyzed.
@@ -186,9 +187,7 @@ vcf_with_metadata %>%
 # create a plot to show how the most common alternative allele is spread
 vcf_with_metadata %>%
   filter(Host_Age >= 25 & Host_Age <= 65, !is.na(gene)) %>%
-  group_by(gene, pos, alt, ref, Host_Age, host_sex) %>%
-  tally() %>%
-  group_by(gene, alt, ref, Host_Age, host_sex) %>%
+  group_by(gene, alt, ref, host_sex) %>%
   tally() %>%
   filter(gene == "S", alt == "T") %>%
   ggplot(aes(x = ref,
@@ -205,7 +204,7 @@ vcf_with_metadata %>%
 ```
 
 **Figure 6**: Figure 6 shows the change from represented reference alleles to the "T" allele in the S gene in male and female patients between 25 years and 65 years of age.
-
+\newpage
 # Tables
 
 ```{r gene-length-table}
