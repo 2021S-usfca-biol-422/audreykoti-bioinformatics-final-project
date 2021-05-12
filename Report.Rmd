@@ -40,7 +40,7 @@ I used a table made by Professor Zimmerman to look at the sizes of each gene. Ba
 
 # Results
 
-Although the surveillance from which the data this report analyses suggested that most COVID-19 patients were in the age group of 20 to 40, the demographics plot of this analysis showed that most of the patients were aged 25 to 65. The majority of these patients were male. Variations in the SARS-CoV-2 genome were present mostly in the N and S genes, with the S gene having the most variations. These S gene variations were more common among males aged 30 to 65 years and also females around the age of 35. This analysis also showed that the S variations increased dramatically around late December 2020 to January 2021. 
+Although the surveillance from which the data this report analyses suggested that most COVID-19 patients were in the age group of 20 to 40, the demographics plot of this analysis showed that most of the patients were aged 25 to 65. The majority of these patients were male. Variations in the SARS-CoV-2 genome were present mostly in the N and S genes, with the S gene having the most variations. These genes were found to be the longest genes with 3,821 and 1,259 base pairs respectively. The S gene variations were more common among males aged 30 to 65 years and also females around the age of 35. This analysis also showed that the S variations increased dramatically around late December 2020 to January 2021. Most mutations - present more in males - were a change to the "T" allele from either the "C" or the "G" reference alleles. The "T" allele was also present in the study more than four times the next common allele. Most of the mutations were single nucleotide polymorphisms except only for 7 out of 1,851 mutations. The "T" allele was also the most common allele in patients under 18 years. However, this group of the study had 6 out of 8 of the characteristic mutations associated with the B.1.351 variant. There "TTA" and the "TTTA" mutations present in the rest of the sample population were not reported in this group of patients under 18.
 
  mostly men infected (more interactions at work). ages 25 - 65 but most men
  N and S genes have more unique SNPs in the set of samples analyzed.
@@ -54,6 +54,8 @@ Although the surveillance from which the data this report analyses suggested tha
  the T allele is still most common, two alternative alleles present in rest of population not found here (the TT and TTTA). not many variants present in U18s.
  
 # Discussion
+
+
 
 ```{r load-packages-and-functions}
 library("vcfR")
