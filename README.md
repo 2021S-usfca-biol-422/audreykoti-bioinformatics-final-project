@@ -15,4 +15,18 @@ It has the SRA Bioproject ID 714043
 
 ### Change Log
 
+* 2021-05-12: Make sure project passes shellcheck, lint and Travis checks, and open a pull request
+* 2021-05-12: Commit and push everything to GitHub
+* 2021-05-12: Generate Report output as a pdf file
+* 2021-05-12: Update the references.bib file with properly formatted citations
+* 2021-05-11: Add additional packages to the Description file
+* 2021-05-09: Add the methods, results and discussion sections and include appropriate citations and commit to GitHub
+* 2021-05-09: Plot analysis figures and tables using SraRunTable data and commit to GitHub
+* 2021-05-09: Run make and commit the output files to GitHub
+* 2021-05-08: Write up the project background including appropriate citations and methods sections and commit to GitHub
+* 2021-05-08: Edit the final project Report.Rmd file with project title, author name and path to the dataset
+* 2021-05-06: Look for sources to reference for relevant information about the data
+* 2021-05-05: Modify the Makefile to run the downloaded SraRunTable
+* 2021-05-05: Download the SraRunTable from NCBI using link in the description above and commit to GitHub
+* 2021-05-03: Check that all functions run properly
 * 2021-04-16: Fork and clone final project repository and provide an overview of the project
